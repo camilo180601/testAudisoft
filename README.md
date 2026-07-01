@@ -8,6 +8,18 @@ Construido con **Laravel 13**, **MySQL 8** y **Tailwind CSS v4** (vistas Blade).
 
 ---
 
+## Capturas
+
+**Mis sitios favoritos**
+
+![Pantalla de sitios](docs/screenshots/sitios.png)
+
+**Mis categorías** (las categorías en uso no se pueden borrar)
+
+![Pantalla de categorías](docs/screenshots/categorias.png)
+
+---
+
 ## Funcionalidad
 
 - **Pantalla principal (`/`)** — «Mis sitios favoritos»: tabla con nombre,
@@ -77,6 +89,8 @@ php artisan migrate --seed
 ```
 
 **Opción B · Script SQL puro (entregable)**
+
+Script de creación de la base de datos: **[database/sql/audisoft_sitios.sql](database/sql/audisoft_sitios.sql)**
 
 ```bash
 mysql -u root -p < database/sql/audisoft_sitios.sql

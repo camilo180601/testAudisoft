@@ -22,12 +22,12 @@
         <div>
             <h1 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Mis sitios favoritos</h1>
             <p class="mt-1 text-sm text-slate-500">
-                {{ $sites->count() }} {{ Str::plural('sitio', $sites->count()) }} ·
-                {{ $categories->count() }} {{ Str::plural('categoría', $categories->count()) }}
+                {{ $sites->total() }} {{ $sites->total() === 1 ? 'sitio' : 'sitios' }} ·
+                {{ $categories->count() }} {{ $categories->count() === 1 ? 'categoría' : 'categorías' }}
             </p>
         </div>
 
-        @if ($sites->isNotEmpty())
+        @if ($sites->total() > 0)
             <div class="relative w-full sm:w-72">
                 <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m2.2-5.3a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"/></svg>
                 <input id="site-search" type="search" placeholder="Buscar sitio o categoría…" autocomplete="off"
@@ -94,7 +94,7 @@
     @endif
 
     {{-- Lista de sitios --}}
-    @if ($sites->isEmpty())
+    @if ($sites->total() === 0)
         <div class="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-16 text-center">
             <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.5-2.5 3.75-5.5 3.75-9S14.5 5.5 12 3m0 18c-2.5-2.5-3.75-5.5-3.75-9S9.5 5.5 12 3m-8.25 9h16.5"/></svg>
@@ -158,6 +158,8 @@
             <div id="sites-empty-search" class="hidden px-5 py-10 text-center text-sm text-slate-400">
                 No hay sitios que coincidan con la búsqueda.
             </div>
+
+            @include('partials.pagination', ['paginator' => $sites])
         </div>
     @endif
 @endsection

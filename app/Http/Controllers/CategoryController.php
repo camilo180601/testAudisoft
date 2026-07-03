@@ -17,7 +17,7 @@ class CategoryController extends Controller
     {
         $categories = Category::withCount('sites')
             ->orderBy('name')
-            ->get();
+            ->paginate(4);
 
         return view('categories.index', compact('categories'));
     }

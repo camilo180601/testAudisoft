@@ -15,7 +15,7 @@ class SiteController extends Controller
      */
     public function index(): View
     {
-        $sites = Site::with('category')->latest()->get();
+        $sites = Site::with('category')->latest()->paginate(4)->withQueryString();
         $categories = Category::orderBy('name')->get();
 
         return view('sites.index', compact('sites', 'categories'));

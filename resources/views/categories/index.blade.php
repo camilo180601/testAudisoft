@@ -11,7 +11,7 @@
             </a>
             <h1 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Mis categorías</h1>
             <p class="mt-1 text-sm text-slate-500">
-                {{ $categories->count() }} {{ Str::plural('categoría', $categories->count()) }}
+                {{ $categories->total() }} {{ $categories->total() === 1 ? 'categoría' : 'categorías' }}
             </p>
         </div>
     </div>
@@ -39,7 +39,7 @@
     </form>
 
     {{-- Lista de categorías --}}
-    @if ($categories->isEmpty())
+    @if ($categories->total() === 0)
         <div class="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-16 text-center">
             <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"/></svg>
@@ -74,7 +74,7 @@
                                 @if ($category->sites_count > 0)
                                     {{-- No se puede borrar una categoría en uso --}}
                                     <span class="inline-flex cursor-not-allowed items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300"
-                                          title="No se puede eliminar: está asignada a {{ $category->sites_count }} {{ Str::plural('sitio', $category->sites_count) }}.">
+                                          title="No se puede eliminar: está asignada a {{ $category->sites_count }} {{ $category->sites_count === 1 ? 'sitio' : 'sitios' }}.">
                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
                                         Borrar
                                     </span>
@@ -95,6 +95,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            @include('partials.pagination', ['paginator' => $categories])
         </div>
     @endif
 @endsection

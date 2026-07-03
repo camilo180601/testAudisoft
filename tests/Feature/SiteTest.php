@@ -69,6 +69,17 @@ class SiteTest extends TestCase
         ])->assertSessionHasErrors('category_id');
     }
 
+    public function test_los_sitios_se_paginan_de_a_cuatro(): void
+    {
+        Site::factory()->count(6)->create();
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $this->assertCount(4, $response->viewData('sites'));
+        $response->assertSee('page=2');
+    }
+
     public function test_se_puede_eliminar_un_sitio(): void
     {
         $site = Site::factory()->create();

@@ -44,6 +44,17 @@ class CategoryTest extends TestCase
         $this->assertDatabaseCount('categories', 1);
     }
 
+    public function test_las_categorias_se_paginan_de_a_cuatro(): void
+    {
+        Category::factory()->count(6)->create();
+
+        $response = $this->get(route('categories.index'));
+
+        $response->assertOk();
+        $this->assertCount(4, $response->viewData('categories'));
+        $response->assertSee('page=2');
+    }
+
     public function test_no_se_puede_eliminar_una_categoria_en_uso(): void
     {
         $category = Category::factory()->create();
